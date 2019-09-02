@@ -16,16 +16,26 @@ $app->get('/api/{platform}/{profile}', function(Request $request, Response $resp
     if (isset($platform) && isset($gamertag)) {
 
         try {
+
             $response = $client->get($platform.'/'.$gamertag, ['headers' => headers
             ]);
+
             print_r(json_decode($response->getBody(), true));  
+
+            //send to front-end as json;
+
         } catch (\Throwable $th) {
             $responseBody = $exception->getResponse()->getBody(true);
         }
 
+        
+
     } else {
+        $response->getBody()->write('request parameters not set');
         echo 'request parameters not set';
+        return $response;
     }
 });
+
 
 
