@@ -16,7 +16,7 @@ $app->get('/api/{platform}/{profile}', function(Request $request, Response $resp
     if (isset($platform) && isset($gamertag)) {
 
         try {
-
+            //store GET response
             $response = $client->get($platform.'/'.$gamertag, ['headers' => headers
             ]);
 
@@ -25,7 +25,10 @@ $app->get('/api/{platform}/{profile}', function(Request $request, Response $resp
             //send to front-end as json;
 
         } catch (\Throwable $th) {
+            //set the response body
             $responseBody = $exception->getResponse()->getBody(true);
+
+            print_r($responseBody);
         }
 
         
