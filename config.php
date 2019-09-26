@@ -12,6 +12,6 @@ const headers = ['TRN-Api-Key' => TRACKER_API_KEY ];
         'headers' => ['Content-Type' => 'application/json'],
         // Base URI is used with relative requests
         'base_uri' => TRACKER_API_URL,
-        // You can set any number of default request options.
+        // default request options.
         'timeout'  => 2.0,
     ]);

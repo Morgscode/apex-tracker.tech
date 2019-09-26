@@ -26,7 +26,7 @@ $app->get('/api/{platform}/{profile}', function(Request $request, Response $resp
             //if response body is filled with data
             if ($response->getBody() !== '') {
                 //return guzzle response data as $reponse
-                return $response;
+                return json_encode($response);
             } else {
                 $response->getBody()->write('there was a problem fetching the profile');
                 return $response;
