@@ -16,12 +16,14 @@ $app->get('/api/{platform}/{profile}', function(Request $request, Response $resp
     if (isset($platform) && isset($gamertag)) {
 
         try {
-            //store GET response
+            //store guzzle resonse response
             $gResponse = $client->get($platform.'/'.$gamertag, ['headers' => headers
             ]);
 
+            //wite guzzle data to response body  
             $response->getBody()->write($gResponse->getBody());
             
+            //return guzzle response data as $reponse
             return $response;
          
         } catch (\Throwable $th) {
