@@ -20,11 +20,18 @@ $app->get('/api/{platform}/{profile}', function(Request $request, Response $resp
             $gResponse = $client->get($platform.'/'.$gamertag, ['headers' => headers
             ]);
 
-            //wite guzzle data to response body  
+            //wite guzzle data to $response body  
             $response->getBody()->write($gResponse->getBody());
             
-            //return guzzle response data as $reponse
-            return $response;
+            //if response body is filled with data
+            if ($response->getBody() !== '') {
+                //return guzzle response data as $reponse
+                return $response;
+            } else {
+                $response->getBody()->write('there was a problem fetching the profile');
+                return $response;
+            }
+            
          
         } catch (\Throwable $th) {
             //set the response body
