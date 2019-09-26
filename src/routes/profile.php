@@ -17,27 +17,26 @@ $app->get('/api/{platform}/{profile}', function(Request $request, Response $resp
 
         try {
             //store GET response
-            $response = $client->get($platform.'/'.$gamertag, ['headers' => headers
+            $gResponse = $client->get($platform.'/'.$gamertag, ['headers' => headers
             ]);
 
-            print_r(json_decode($response->getBody(), true));  
-
-            //send to front-end as json;
-
+            $response->getBody()->write($gResponse->getBody());
+            
+            return $response;
+         
         } catch (\Throwable $th) {
             //set the response body
             $responseBody = $exception->getResponse()->getBody(true);
 
-            print_r($responseBody);
+            return $responseBody;
         }
-
-        
 
     } else {
         $response->getBody()->write('request parameters not set');
         echo 'request parameters not set';
         return $response;
     }
+    
 });
 
 
