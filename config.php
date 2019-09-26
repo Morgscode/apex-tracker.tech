@@ -9,7 +9,7 @@ const headers = ['TRN-Api-Key' => TRACKER_API_KEY ];
 
 //instantiate guzzle class
      $client = new Client([
-        'headers' => ['Content-Type' => 'application/json'],
+        'headers' => ['Content-Type' => 'application/json', 'Accept' => 'application/json'],
         // Base URI is used with relative requests
         'base_uri' => TRACKER_API_URL,
         // default request options.

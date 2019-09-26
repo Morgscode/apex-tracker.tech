@@ -20,8 +20,10 @@ $app->get('/api/{platform}/{profile}', function(Request $request, Response $resp
             $gResponse = $client->get($platform.'/'.$gamertag, ['headers' => headers
             ]);
 
+            $profileData = $gResponse->getBody();
+
             //wite guzzle data to $response body  
-            $response->getBody()->write($gResponse->getBody());
+            $response->getBody()->write($profileData);
             
             //if response body is filled with data
             if ($response->getBody() !== '') {
