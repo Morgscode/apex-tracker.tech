@@ -28,15 +28,11 @@ $app->get('/api/{platform}/{profile}', function(Request $request, Response $resp
             //set the response body
             $responseBody = $th->getResponse()->getBody(true);
 
-            //return $responseBody;
+            return $responseBody;
         }
 
-    } else {
-        //$response->getBody()->write('request parameters not set');
-        //echo 'request parameters not set';
-        //return $response;
-    }
-    
+    } 
+
 });
 
 
