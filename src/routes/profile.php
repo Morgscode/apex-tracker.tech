@@ -14,7 +14,15 @@ $app->get('/api/{platform}/{profile}', function(Request $request, Response $resp
 
     $profileController->getProfile($platform, $gamertag);
 
-     //write guzzle data to $response body  
-     $response->getBody()->write(ProfileController::$profileData);
+    if (!empty(ProfileController::$profileData)) : 
+        //write guzzle data to $response body  
+        $response->getBody()->write(ProfileController::$profileData);
+
+     else :
+
+        //write error to $response body  
+        $response->getBody()->write('404 - params not set');
+
+     endif;
    
 });
