@@ -5,16 +5,16 @@ use ApexLegendsTracker\Src\Config\RequestLogger as RequestLogger;
 use ApexLegendsTracker\Src\Controller\ProfileController as ProfileController;
 
 // get by apex legends profile gamertag and platform
-$app->get('/api/{platform}/{profile}', function(Request $request, Response $response){
+$app->get('/api/v1/{platform}/{profile}', function(Request $request, Response $response){
 
    $requestLogger = new RequestLogger('request-logs.txt');
+
+   $requestLogger->logProfileRequest($request);
 
    $profileController = new ProfileController();
 
    $platform = $request->getAttribute('platform');
    $gamertag = $request->getAttribute('profile');
-
-   $requestLogger->LogRequest([$platform, $gamertag]);
 
    $profileController->getProfile($platform, $gamertag);
 

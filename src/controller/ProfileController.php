@@ -2,14 +2,19 @@
 
 namespace ApexLegendsTracker\Src\Controller;
 use ApexLegendsTracker\Src\Config\Configurations as Configurations;
+use ApexLegendsTracker\Src\Config\RequestLogger as RequestLogger;
 use GuzzleHttp\Client as Client;
+
 
 class ProfileController {
 
   protected $client;
   static $profileData;
+  private $requestLogger; 
 
   public function __construct() {
+
+    $this->requestLogger = new RequestLogger('profile-requests.txt');
 
     //Define endpoint for this instance of client
     Configurations::defineApiUrl();
