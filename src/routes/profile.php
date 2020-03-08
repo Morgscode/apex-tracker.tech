@@ -1,17 +1,22 @@
 <?php 
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
+use ApexLegendsTracker\Src\Config\RequestLogger as RequestLogger;
 use ApexLegendsTracker\Src\Controller\ProfileController as ProfileController;
 
-// get by gamertag and platform
+// get by apex legends profile gamertag and platform
 $app->get('/api/{platform}/{profile}', function(Request $request, Response $response){
 
-    $profileController = new ProfileController();
+   $requestLogger = new RequestLogger('request-logs.txt');
 
-    $platform = $request->getAttribute('platform');
-    $gamertag = $request->getAttribute('profile');
+   $profileController = new ProfileController();
 
-    $profileController->getProfile($platform, $gamertag);
+   $platform = $request->getAttribute('platform');
+   $gamertag = $request->getAttribute('profile');
+
+   $requestLogger->LogRequest([$platform, $gamertag]);
+
+   $profileController->getProfile($platform, $gamertag);
 
     if (!empty(ProfileController::$profileData)) : 
         //write guzzle data to $response body  

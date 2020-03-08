@@ -2,7 +2,8 @@
 
 namespace ApexLegendsTracker\Src\Config;
 
-class RequestConfigurations {
+class Configurations {
+  
   public static $TRACKER_API_KEY;
   public static $TRACKER_API_URL;
 

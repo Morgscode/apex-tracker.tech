@@ -1,7 +1,7 @@
 <?php 
 
 namespace ApexLegendsTracker\Src\Controller;
-use ApexLegendsTracker\Src\Config\RequestConfigurations as RequestConfigurations;
+use ApexLegendsTracker\Src\Config\Configurations as Configurations;
 use GuzzleHttp\Client as Client;
 
 class ProfileController {
@@ -12,14 +12,14 @@ class ProfileController {
   public function __construct() {
 
     //Define endpoint for this instance of client
-    RequestConfigurations::defineApiUrl();
+    Configurations::defineApiUrl();
     
     //Define the client for this request
     $this->client = new Client([
       'headers' => ['Content-Type' => 'application/json', 'Accept' => 'application/json'
   ],
       // Base URI is used with relative requests
-      'base_uri' =>  RequestConfigurations::$TRACKER_API_URL,
+      'base_uri' =>  Configurations::$TRACKER_API_URL,
       // default request options.
       'timeout'  => 2.0,
   ]);
@@ -31,9 +31,9 @@ class ProfileController {
      if (isset($platform) && isset($gamertag)) {
 
       // set api key for request
-      RequestConfigurations::setupAuth();
+      Configurations::setupAuth();
 
-      $headers = ['TRN-Api-Key' => RequestConfigurations::$TRACKER_API_KEY ];
+      $headers = ['TRN-Api-Key' => Configurations::$TRACKER_API_KEY ];
       
       try {
           //store guzzle resonse response
