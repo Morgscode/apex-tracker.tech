@@ -8,7 +8,8 @@
   },
   "autoload": {
     "classmap": [
-      "./src/controller"
+      "./src/controller",
+      "./src/config"
     ]
   }
 }
