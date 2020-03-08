@@ -1,14 +1,17 @@
 <?php 
 
+namespace ApexLegendsTracker\Src\Controller;
+use GuzzleHttp\Client as Client;
+
 require __DIR__.'/../../config.php';
 
 class ProfileController {
 
-  public $client;
+  protected $client;
   static $profileData;
 
   public function __construct() {
-    $this->client = new GuzzleHttp\Client([
+    $this->client = new Client([
       'headers' => ['Content-Type' => 'application/json', 'Accept' => 'application/json'
   ],
       // Base URI is used with relative requests

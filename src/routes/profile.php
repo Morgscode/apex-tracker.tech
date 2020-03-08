@@ -1,10 +1,9 @@
 <?php 
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
+use ApexLegendsTracker\Src\Controller\ProfileController as ProfileController;
 
-require '../src/controller/ProfileController.php';
-
-// get by gamertag customers 
+// get by gamertag and platform
 $app->get('/api/{platform}/{profile}', function(Request $request, Response $response){
 
     $profileController = new ProfileController();

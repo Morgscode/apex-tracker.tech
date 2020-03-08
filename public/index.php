@@ -3,11 +3,13 @@
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-$config['displayErrorDetails'] = true;
-
 require __DIR__.'/../vendor/autoload.php';
 
-$app = new \Slim\App(['settings' => $config]);
+$config['displayErrorDetails'] = true;
+
+$appContainer = new \Slim\Container($config);
+
+$app = new \Slim\App($appContainer);
 
 if (isset($_SERVER['HTTP_ORIGIN'])) {
     header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
@@ -30,4 +32,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 require '../src/routes/profile.php';
 
 $app->run();
-
