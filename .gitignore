@@ -1,2 +1,4 @@
 /vendor
 /client
+composer.phar
+composer.lock
