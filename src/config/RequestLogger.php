@@ -4,8 +4,12 @@ namespace ApexLegendsTracker\Src\Config;
 
 class RequestLogger {
   
-  protected $requestLog;
-  protected $logBody = [];
+  protected $requestLogUrl;
+  protected $profileRequestLogs;
+  protected $requestTestLogUrl; 
+  protected $newLogBody = [];
+  protected $requestItems = [];
+  protected $profileParams = [];
   protected $requestUri;
   protected $requestContentType;
   protected $requestHost;
@@ -17,42 +21,54 @@ class RequestLogger {
       mkdir('./../logs');
     endif; 
 
-    $this->requestLog = "./../logs/".$file;
+    $this->requestLogUrl = "./../logs/".$file;
+    $this->requestTestLogUrl = "./../logs/test.json"; 
+  }
+
+  private function buildRequestLog($request) {
+
+    $this->requestItems = [
+        'Request Date' => date('d/m/Y'),
+        'Request Method' => $request->getMethod(),
+        'Content-Type' => $request->getContentType(),
+        'Host' => $request->getUri()->getHost()
+    ];
+  }
+
+  private function testRequestLog() {
+
+    unset($this->profileRequestLogs);
+
+    $this->profileRequestLogs = json_decode(file_get_contents($this->requestLogUrl));
     
+    $log = $this->profileRequestLogs;
+
+    file_put_contents($this->requestTestLogUrl, json_encode($log));
   }
 
-  private function appendToProfileRequestLogBody($arr = []) {
-    foreach ($arr as $arr_item) :
-      array_push($this->logBody, $arr_item);
-    endforeach;
-  }
+  private function buildProfileRequestLog($request) {
 
-  private function buildRequestInfo($request) {
+    unset($this->newLogBody);
 
-    $request_items = [
-     $request->getContentType(),
-     $request->getMethod(),
-     $request->getUri()->getQuery(),
-     $request->getUri()->getHost(),
+    $this->buildRequestLog($request);
+
+    $this->profileParams = [
+        'Platform' => $request->getAttribute('platform'),
+        'Gamertag' => $request->getAttribute('profile')
     ];
 
-    $this->appendToProfileRequestLogBody($request_items);
+    $log = array_merge($this->requestItems, $this->profileParams);
 
+    array_push($this->newLogBody, $log);
   }
 
   public function logProfileRequest($request) {
 
-    $this->buildRequestInfo($request);
+    $this->buildProfileRequestLog($request);
 
-    $profileParams = [
-      $request->getAttribute('platform'),
-      $request->getAttribute('profile')
-    ];
+    file_put_contents($this->requestLogUrl, json_encode($this->newLogBody), FILE_APPEND);
 
-    $this->appendToProfileRequestLogBody($profileParams);
-
-    file_put_contents($this->requestLog, json_encode($this->logBody).',', FILE_APPEND);
-
+    $this->testRequestLog();
   }
 
 }

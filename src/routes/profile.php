@@ -7,7 +7,7 @@ use ApexLegendsTracker\Src\Controller\ProfileController as ProfileController;
 // get by apex legends profile gamertag and platform
 $app->get('/api/v1/{platform}/{profile}', function(Request $request, Response $response){
 
-   $requestLogger = new RequestLogger('request-logs.txt');
+   $requestLogger = new RequestLogger('profile-request-logs.json');
 
    $requestLogger->logProfileRequest($request);
 

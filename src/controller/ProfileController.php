@@ -10,11 +10,8 @@ class ProfileController {
 
   protected $client;
   static $profileData;
-  private $requestLogger; 
-
+  
   public function __construct() {
-
-    $this->requestLogger = new RequestLogger('profile-requests.txt');
 
     //Define endpoint for this instance of client
     Configurations::defineApiUrl();
