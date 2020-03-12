@@ -8,6 +8,7 @@ class RequestLogger {
   protected $profileRequestLogs;
   protected $requestTestLogUrl; 
   protected $newLogBody = [];
+  protected $log;
   protected $requestItems = [];
   protected $profileParams = [];
   protected $requestUri;
@@ -35,20 +36,9 @@ class RequestLogger {
     ];
   }
 
-  private function testRequestLog() {
-
-    unset($this->profileRequestLogs);
-
-    $this->profileRequestLogs = json_decode(file_get_contents($this->requestLogUrl));
-    
-    $log = $this->profileRequestLogs;
-
-    file_put_contents($this->requestTestLogUrl, json_encode($log));
-  }
-
   private function buildProfileRequestLog($request) {
 
-    unset($this->newLogBody);
+    $this->newLogBody = [];
 
     $this->buildRequestLog($request);
 
@@ -64,11 +54,28 @@ class RequestLogger {
 
   public function logProfileRequest($request) {
 
+    unset($this->profileRequestLogs);
+
     $this->buildProfileRequestLog($request);
 
-    file_put_contents($this->requestLogUrl, json_encode($this->newLogBody), FILE_APPEND);
+    //check for logfile content
+    if (filesize($this->requestLogUrl)) : 
 
-    $this->testRequestLog();
+    //if logfile has content
+      $this->profileRequestLogs = file_get_contents($this->requestLogUrl);
+    
+      $log = json_decode($this->profileRequestLogs, true);
+  
+      array_push($this->newLogBody, $log[0]);
+  
+      file_put_contents($this->requestLogUrl, json_encode($this->newLogBody));
+
+      else :
+
+    //else send first log
+      file_put_contents($this->requestLogUrl, json_encode($this->newLogBody), FILE_APPEND);
+
+      endif;
   }
 
 }
