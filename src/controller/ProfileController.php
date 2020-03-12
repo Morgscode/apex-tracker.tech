@@ -46,9 +46,8 @@ class ProfileController {
     
       } catch (\Throwable $th) {
           //set the response body
-          $responseBody = $th->getResponse()->getBody(true);
-
-          return $responseBody;
+          
+          return $response->getBody();
       }
 
     }

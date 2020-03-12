@@ -62,11 +62,17 @@ class RequestLogger {
     if (filesize($this->requestLogUrl)) : 
 
     //if logfile has content
+      // grab current log content
       $this->profileRequestLogs = file_get_contents($this->requestLogUrl);
     
-      $log = json_decode($this->profileRequestLogs, true);
-  
-      array_push($this->newLogBody, $log[0]);
+      //decode into associatice arr
+      $logs = json_decode($this->profileRequestLogs, true);
+      
+      //push the new log 
+
+      foreach ($logs as $log) : 
+        array_push($this->newLogBody, $log);
+      endforeach; 
   
       file_put_contents($this->requestLogUrl, json_encode($this->newLogBody));
 
