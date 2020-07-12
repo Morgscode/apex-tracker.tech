@@ -1,5 +1,7 @@
 # apex-tracker.tech
 
+This project needs to be updated to  meet the current api standards and so is currently not functioning, however it is still a good example of how I would go about producing a small, simple API. 
+
 a simple rest api built in Slim PHP 3.0
 
 makes GET requests to a 3rd party api. 
